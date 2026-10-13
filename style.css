@@ -1,0 +1,182 @@
+@font-face {
+  font-family: "Special Elite";
+  src: url("fonts/SpecialElite-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+
+:root {
+  --bg: #111111;
+  --text: #dddddd;
+  color-scheme: dark;
+}
+
+* {
+  margin: 0; /* überall 0 damit ich selber sagen kann wo alles ist */
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg); /* background */
+  color: var(--text); /* textFarbe */
+  font-family: "Special Elite", "Courier New", monospace;
+}
+
+.projekt-kopf .meta {
+  opacity: 0.6;
+  margin-top: 0.25rem;
+} /* alles was die Klasse "meta" hat UND in "projekt-kopf" liegt soll dunkler sein */
+
+.seite {
+  max-width: 60rem; /* 60 mal die basic Schriftgröße */
+  margin: 0 auto;
+  padding: 5rem 1.5rem; /* (oben, unten) (left, right) */
+}
+/* margin platz zu anderen elementen */
+/* padding ist platz zum rand des eigenen elementes */
+
+.seite h1 {
+  font-size: clamp(2rem, 8vw, 4rem);
+  margin-bottom: 2rem;
+}
+/* unter der überschrift ist 2rem platz */
+/* hier soll der Tag mit wenig abstand und Rahmen */
+.tags {
+  list-style: none; /* keine Liste - kein Punkt davor */
+  display: flex; /* werden jetzt aneinander gereiht */
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 0.75rem 0;
+}
+
+.tags li {
+  border: 1px solid currentColor; /* sehr nah an der schrift */
+  padding: 0.1rem 0.5rem; /* gibt in der Box (border) mehr platz */
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+/* Canvas */
+
+.canvas-wrapper {
+  --verhaeltnis: 1; /* Breite durch Höhe, beim Game of Life 4 / 3 */
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--verhaeltnis);
+  cursor: crosshair;
+  touch-action: none; /* Finger ziehen und zoomen im Canvas, statt die Seite zu scrollen */
+}
+
+/* Steuerung */
+
+.steuerung {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.8rem 0;
+}
+
+.steuerung label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.steuerung button,
+.steuerung input {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 1px solid currentColor;
+}
+
+.steuerung button {
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+}
+
+.steuerung input {
+  width: 7.5rem;
+  padding: 0.3rem 0.5rem;
+}
+
+.steuerung input[type="checkbox"],
+.steuerung input[type="range"] {
+  width: auto;
+  border: none;
+  padding: 0;
+  accent-color: var(--text);
+}
+
+.steuerung button:hover,
+.steuerung button:focus-visible,
+.steuerung button[aria-pressed="true"] {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/*
+Werkbank: Canvas links (zwei Drittel), Titel und Bedienung rechts
+gilt, sobald der Bildschirm breiter als hoch ist (Desktop, Handy quer)
+und nicht winzig. Hochkant bleibt alles untereinander.
+
+  ┌────────────────┬───────────┐
+  │                │ kopf      │
+  │     feld       ├───────────┤
+  │                │ bedienung │
+  └────────────────┴───────────┘
+*/
+
+@media (orientation: landscape) and (min-width: 40rem) {
+  .werkbank {
+    max-width: 120rem;
+    padding: 2rem 1.5rem;
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "feld kopf"
+      "feld bedienung";
+    column-gap: 2.5rem;
+    align-items: start; /* nicht strecken, damit sticky geht */
+  }
+
+  .werkbank .projekt-kopf {
+    grid-area: kopf;
+  }
+
+  .werkbank h1 {
+    font-size: clamp(1.5rem, 3vw, 2.5rem); /* rechts ist weniger Platz */
+    margin-bottom: 1rem;
+  }
+
+  .werkbank .canvas-wrapper {
+    grid-area: feld;
+    position: sticky; /* bleibt stehen, wenn man rechts scrollt */
+    top: 2rem;
+  }
+
+  .werkbank .bedienung {
+    grid-area: bedienung;
+  }
+
+  /* nie höher als der Bildschirm: Höhe = Breite / Verhältnis */
+  .werkbank canvas {
+    width: min(100%, calc((100vh - 4rem) * var(--verhaeltnis)));
+    width: min(100%, calc((100dvh - 4rem) * var(--verhaeltnis))); /* dvh: Handy-Adressleiste mitgerechnet, ältere Browser nehmen die Zeile drüber */
+    margin: 0 auto;
+  }
+
+  .werkbank .steuerung {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .werkbank .steuerung label {
+    justify-content: space-between; /* Text links, Feld rechts */
+  }
+}

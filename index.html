@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>3D-Attraktoren</title>
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body>
+    <!-- werkbank: hochkant untereinander, quer Canvas links und Bedienung rechts (style.css) -->
+    <main class="seite werkbank">
+      <header class="projekt-kopf">
+        <h1>3D-Attraktoren</h1>
+        <ul class="tags">
+          <li>attraktor</li>
+          <li>projekt</li>
+        </ul>
+      </header>
+
+      <div class="canvas-wrapper">
+        <canvas id="zeichenBild"></canvas>
+      </div>
+
+      <div class="bedienung">
+        <div class="steuerung">
+          <button type="button" id="sofortBtn">Animieren</button>
+
+          <label>Punkte <input type="number" id="punkte" min="1000" max="10000000" step="1000"></label>
+          <label>Stärke <input type="number" id="staerke" min="1" max="255" step="1"></label>
+          <label>Zoom <input type="number" id="zoom" min="1" max="100000" step="1"></label>
+
+          <button type="button" id="massstabBtn">Maßstab</button>
+        </div>
+      </div>
+    </main>
+    <!-- noch kein Skript: kommt, wenn du den 3D-Attraktor nachbaust (main.js als Modul wie beim 2D) -->
+  </body>
+</html>
