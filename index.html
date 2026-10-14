@@ -27,12 +27,17 @@
 
           <label>Punkte <input type="number" id="punkte" min="1000" max="10000000" step="1000"></label>
           <label>Stärke <input type="number" id="staerke" min="1" max="255" step="1"></label>
-          <label>Zoom <input type="number" id="zoom" min="1" max="100000" step="1"></label>
+          <label>Abstand <input type="number" id="abstand" min="0.2" max="20" step="0.1"></label>
 
-          <button type="button" id="massstabBtn">Maßstab</button>
+          <button type="button" id="ansichtBtn">Ansicht Zurücksetzen</button>
+        </div>
+        <div class="steuerung">
+          <label><input type="checkbox" id="farbigCheck"> Farbe</label>
+          <label>Rot <input type="range" min="0" max="1" step="0.01" value="1" id="red"></label>
+          <label>Blau <input type="range" min="0" max="1" step="0.01" value="1" id="blue"></label>
         </div>
       </div>
     </main>
-    <!-- noch kein Skript: kommt, wenn du den 3D-Attraktor nachbaust (main.js als Modul wie beim 2D) -->
+    <script type="module" src="main.js"></script>
   </body>
 </html>
