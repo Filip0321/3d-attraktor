@@ -97,21 +97,21 @@ out vec4 farbe;
 void main() {
   vec3 anfang = vec3(0.0, 0.0, blue); // blau
   vec3 ende = vec3(red, 0.0, 0.0); // rot
-  vec3 grundfarbe;
+  vec3 grund;
   if (farbig > 0.5) {
     // fortschritt entscheidet die Farbe (früher Punkt blau, später rot)
-    grundfarbe = mix(anfang, ende, fortschritt);
+    grund = mix(anfang, ende, fortschritt);
     // invertiert wird vom Weiß abgezogen (siehe blendEquation in zeichne):
     // zieht man die Gegenfarbe ab, bleibt die Farbe selbst übrig
     // Weiß (1, 1, 1) minus Gegenfarbe von Blau (1, 1, 0) = Blau (0, 0, 1)
-    if (invertiert > 0.5) grundfarbe = vec3(1.0) - grundfarbe;
+    grund = invertiert ? 1 - 17 / 255 : 17 / 255;
   } else {
     // grau: alle 3 Kanäle gleich
-    grundfarbe = vec3(1.0);
+    grund = vec3(1.0);
   }
   // wendet auf die ersten 3 werte die Helligkeit an
   // staerke wie hell (invertiert: wie dunkel) ein Punkt macht
-  farbe = vec4(grundfarbe * staerke, 1.0);
+  farbe = vec4(grund * staerke, 1.0);
   if (travel > 0.5) farbe.rgb *= leuchten;
 }`;
 
