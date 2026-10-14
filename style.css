@@ -120,6 +120,43 @@ canvas {
 }
 
 /*
+Regler (range) mit Zahl: Text oben, darunter Regler über die ganze Breite,
+rechts daneben die Zahl mit fester Breite. So schiebt eine längere Zahl
+den Regler nicht hin und her, am Desktop und am Handy hochkant gleich.
+
+  Länge
+  ●━━━━━━━━━━━━━━━━━━━━━━━━  20000
+*/
+
+.steuerung label:has(> input[type="range"]) {
+  display: grid;
+  grid-template-columns: 1fr 5em; /* Regler bekommt den Rest, Zahl immer 5 Zeichen breit */
+  align-items: center;
+  column-gap: 0.75rem;
+  row-gap: 0.2rem;
+  flex: 1 1 100%; /* jede Regler-Zeile über die volle Breite */
+}
+
+/* der Text vor dem Regler landet von selbst in Zeile 1, Spalte 1 */
+.steuerung label > input[type="range"] {
+  grid-row: 2;
+  grid-column: 1;
+  width: 100%;
+}
+
+.steuerung label > output {
+  grid-row: 2;
+  grid-column: 2;
+  text-align: right;
+  font-variant-numeric: tabular-nums; /* alle Ziffern gleich breit, die Zahl zittert nicht */
+}
+
+/* Regler ohne Zahl: über beide Spalten */
+.steuerung label:not(:has(> output)) > input[type="range"] {
+  grid-column: 1 / -1;
+}
+
+/*
 Werkbank: Canvas links (zwei Drittel), Titel und Bedienung rechts
 gilt, sobald der Bildschirm breiter als hoch ist (Desktop, Handy quer)
 und nicht winzig. Hochkant bleibt alles untereinander.
@@ -129,6 +166,17 @@ und nicht winzig. Hochkant bleibt alles untereinander.
   │     feld       ├───────────┤
   │                │ bedienung │
   └────────────────┴───────────┘
+
+  In NeoVim einfach Strg+K und dann den Diagraph eintippen
+
+  Zeichen	| Digraph	| Zeichen	| Digraph
+  -------------------------------------
+    ─	        hh	      │ 	      vv
+    ┌	        dr	      ┐	        dl
+    └	        ur	      ┘	        ul
+    ├	        vr	      ┤	        vl
+    ┬	        dh	      ┴	        uh
+    ┼	        vh
 */
 
 @media (orientation: landscape) and (min-width: 40rem) {
@@ -179,4 +227,10 @@ und nicht winzig. Hochkant bleibt alles untereinander.
   .werkbank .steuerung label {
     justify-content: space-between; /* Text links, Feld rechts */
   }
+
+  /* Häkchen gehören direkt vor ihren Text, nicht ans andere Ende */
+  .werkbank .steuerung label:has(> input[type="checkbox"]) {
+    justify-content: flex-start;
+  }
 }
+

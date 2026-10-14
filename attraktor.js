@@ -2,8 +2,8 @@
 
 const LIMIT_ABSTAND_PUNKTE = 1000000;
 const EINPENDEL_ZEIT = 5; // Zeiteinheiten, nicht Schritte
-// weil dt sind Zeiteinheiten, manche attraktoren bewegen sich schneller als andere
-// 1 dt ist eine Zeiteinheit, ein großer schritt
+// weil dt ein Bruchteil einer Zeiteinheit ist, und jeder Typ ein anderes dt hat
+// (Lorenz dt = 0.005: 200 Schritte pro Zeiteinheit, Thomas dt = 0.05: nur 20)
 // um sicherzugehen dass der Punkt schon auf der Laufbahn ist wenn man malt
 
 export const LORENZ = {
@@ -23,7 +23,7 @@ export const LORENZ = {
   },
 };
 
-// schauen ob der Punkt schon zu weit weg ist oder nicht merh endlich
+// schauen ob der Punkt schon zu weit weg ist oder nicht mehr endlich
 function punktNichtMehrDa(punkt) {
   return (
     !Number.isFinite(punkt.x + punkt.y + punkt.z) ||
@@ -82,8 +82,9 @@ export function vermesseAttraktor(punkte) {
       maxX - minX, 
       maxY - minY,
       maxZ - minZ, 1e-9),
-    // nie 0, sonst teilt passenderZoom durch 0
+    // nie 0, sonst teilt der Shader (punkt - mitte) / mass durch 0
     // würde ich hier wieder breite, hoehe und tiefe nehmen, dann hätte ich kein uniformen 
     // Attraktor beim Drehen
   };
 }
+
