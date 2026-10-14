@@ -160,7 +160,7 @@ export function erstelleShader(canvas) {
   // preserveDrawingBuffer: das Bild bleibt nach dem Zeichnen stehen,
   // sonst können "Bild speichern", Video-Export und die Effekt-Schicht
   // es später nicht mehr auslesen (sie sehen dann nur Schwarz)
-  const gl = canvas.getContext("webgl2", { preserveDrawingBuffer: true });
+  const gl = canvas.getContext("webgl2", { preserveDrawingBuffer: true, alpha: false });
   if (!gl) throw new Error("Dein Browser unterstützt kein WebGL2.");
 
   const programm = baueProgramm(gl);
