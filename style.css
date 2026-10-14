@@ -22,6 +22,11 @@ body {
   font-family: "Special Elite", "Courier New", monospace;
 }
 
+/* Platz zwischen Titel/Tags und dem Canvas darunter */
+.projekt-kopf {
+  margin-bottom: 2rem;
+}
+
 .projekt-kopf .meta {
   opacity: 0.6;
   margin-top: 0.25rem;
@@ -125,7 +130,7 @@ rechts daneben die Zahl mit fester Breite. So schiebt eine längere Zahl
 den Regler nicht hin und her, am Desktop und am Handy hochkant gleich.
 
   Länge
-  ●━━━━━━━━━━━━━━━━━━━━━━━━  20000
+  ----------------------------  20000
 */
 
 .steuerung label:has(> input[type="range"]) {
@@ -202,10 +207,21 @@ und nicht winzig. Hochkant bleibt alles untereinander.
     margin-bottom: 1rem;
   }
 
+  .werkbank .projekt-kopf {
+    margin-bottom: 1rem;
+  }
+
+  /* der Wrapper ist so hoch wie der Bildschirm (minus Rand) und bleibt stehen,
+     der Canvas sitzt darin waagerecht und senkrecht in der Mitte */
   .werkbank .canvas-wrapper {
     grid-area: feld;
     position: sticky; /* bleibt stehen, wenn man rechts scrollt */
     top: 2rem;
+    height: calc(100vh - 4rem);
+    height: calc(100dvh - 4rem);
+    display: flex;
+    align-items: center; /* senkrecht mittig */
+    justify-content: center; /* waagerecht mittig */
   }
 
   .werkbank .bedienung {
